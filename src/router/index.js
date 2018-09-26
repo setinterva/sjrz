@@ -4,6 +4,7 @@ import Indexs from '../components/index'          //首页
 import Enterprise from '../components/enterprise'     //企业商户
 import Individual from '../components/individual'    //个体户
 import Personage from '../components/personage'     //个人收款
+import Logo from '../components/logo'     //个人收款
 Vue.use(Router)
 
 export default new Router({
@@ -28,6 +29,10 @@ export default new Router({
       path: '/personage',
       name: 'Personage',
       component: Personage
+    },{
+      path: '/logo',
+      name: 'Logo',
+      component: Logo
     }
   ]
 })

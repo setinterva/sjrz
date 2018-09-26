@@ -8,17 +8,17 @@
             <!-- 主要内容 -->
             <van-cell-group>
                 <van-field v-model="dianpu" clearable label="店铺名称" placeholder="请输入店铺名" />
-                <van-field v-model="phoneNumber" clearable label="电话" placeholder="请输入电话" />
+                <van-field v-model="phoneNumber" clearable label="电话" placeholder="请输入电话" oninput="if(value.length > 11)value = value.slice(0, 11)"/>
                 <van-field v-model="username" clearable label="姓名" placeholder="请输入姓名" />
-                <van-field v-model="cardid" clearable label="身份证号" placeholder="请输入身份证号" />
+                <van-field v-model="cardid" clearable label="身份证号" placeholder="请输入身份证号" oninput="if(value.length > 18)value = value.slice(0, 18)"/>
                 <van-field v-model="industry" clearable label="店铺类型" placeholder="请选择行业" @click="popupVisible = true"/>
-                <van-field v-model="point" clearable label="扣点" placeholder="请输入扣点(平台扣款比例0~1)" />
-                <van-field v-model="postcode" clearable label="邮政编码" placeholder="请输入邮编" />
-                <van-field v-model="email" clearable label="邮箱" placeholder="请输入邮箱" />
-                <van-field v-model="bankNumber" clearable label="结算卡联行号" placeholder="请输入结算卡联行号" />
+                <van-field v-model="point" clearable label="扣点" placeholder="请输入扣点(平台扣款比例0~1)" v-on:blur="change1(point)"/>
+                <van-field v-model="postcode" clearable label="邮政编码" placeholder="请输入邮编" oninput="if(value.length > 6)value = value.slice(0, 6)"/>
+                <van-field v-model="email" clearable label="邮箱" placeholder="请输入邮箱" v-on:blur="changeCount(email)"/>
+                <van-field v-model="bankNumber" clearable label="结算卡联行号" placeholder="请输入结算卡联行号" oninput="if(value.length > 12)value = value.slice(0, 12)"/>
                 <van-field v-model="accounttype" clearable label="结算类型" placeholder="" />
                 <van-field v-model="accountremark" clearable label="结算备注" placeholder="" />
-                <van-field v-model="opennumber" clearable label="营业执照号码" placeholder="" />
+                <van-field v-model="opennumber" clearable label="营业执照号码" placeholder="" oninput="if(value.length > 18)value = value.slice(0, 18)"/>
             </van-cell-group>
             <!-- 店铺类型 -->
             <div class="radiotask" style="border-bottom: 1px solid #ebebeb;padding-bottom: 10px;">
@@ -490,6 +490,20 @@ export default {
             this.town = this.result.area.name;
             this.address = this.province + this.city + this.town;
         },
+        changeCount(email){
+            var reg=/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+            if(!reg.test(email)){
+                alert("请输入正确的邮箱")
+                this.email = ''
+            }
+        },
+        change1(point){
+          var leg =  /^[0]\.[0-9]{2}$/
+          if(!leg.test(point)){
+              alert("请输入0~1之间的两位小数")
+              this.point = ''
+          }
+        },
         tap(){
             if(this.username1 == '' && this.banktype == '' && this.account == ''){
                 this.settle = "0"
@@ -506,7 +520,7 @@ export default {
             var _this = this;
                 var jingdu = "";
                 var weidu = "";
-                console.log(this.address)
+                // console.log(this.address)
                 axios({
                     method:"get",
                     url:"https://restapi.amap.com/v3/geocode/geo?address="+ this.address + this.address1  +"&key=f2a3bebf4831379bee347e6ea85d5e42"
@@ -515,7 +529,7 @@ export default {
                     let arr = str.split(",")
                     jingdu = arr[0];
                     weidu = arr[1] 
-                    console.log(jingdu,weidu)
+                    // console.log(jingdu,weidu)
 
 
 
@@ -573,12 +587,11 @@ export default {
                                 processData:false,
                                 contentType:false,
                                 success:function(data){
-                                    _this.$dialog.alert({
-                                        message: '审核中,请耐心等待'
-                                    });                    
-                                },
-                                fail:function(err){
-                                    alert("提交失败"+err)
+                                    if(data.status.code == "200"){
+                                          _this.$router.push("/logo") 
+                                    }else{
+                                        alert(data.status.message)
+                                    }                    
                                 }
                             })                            
                         
@@ -638,12 +651,11 @@ export default {
                                 processData:false,
                                 contentType:false,
                                 success:function(data){
-                                    _this.$dialog.alert({
-                                        message: '审核中,请耐心等待'
-                                    });                    
-                                },
-                                fail:function(err){
-                                    alert("提交失败"+err)
+                                    if(data.status.code == "200"){
+                                         _this.$router.push("/logo")
+                                    }else{
+                                        alert(data.status.message)
+                                    }                    
                                 }
                             })                            
                 }else{
@@ -687,6 +699,18 @@ export default {
             let leg = /\D/g;
             if(leg.test(a)){
                 this.phoneNumber = ""
+            }
+        },
+        postcode(a){
+           let leg = /\D/g;
+            if(leg.test(a)){
+                this.postcode = ""   
+            } 
+        },
+        bankNumber:function(a){
+            let leg = /\D/g;
+            if(leg.test(a)){
+                this.bankNumber = ""   
             }
         }
     }
