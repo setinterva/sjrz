@@ -1,5 +1,5 @@
 <template>
-    <div class="logo" style="display:flex;flex-direction: column;">
+    <div class="logo2" style="display:flex;flex-direction: column;">
         <div class="header1" v-if="showtime"> 
             <van-icon name="arrow-left" @click="back()"/>
             <span>入驻协议</span>
@@ -21,7 +21,7 @@ export default {
     },
     methods:{
         back(){
-            this.$router.push("/enterprise")
+            this.$router.push("/individual")
         }
     },
     mounted(){
@@ -54,7 +54,7 @@ export default {
 </style>
 
 <style scoped>
-.logo{
+.logo2{
     width:100%;
     height: 100%;
     overflow-y: auto;

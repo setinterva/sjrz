@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <router-view/>
+    <keep-alive>     <!--使用keep-alive会将页面缓存-->
+      <router-view v-if="$route.meta.keepAlive"></router-view>
+   </keep-alive>
+   <router-view v-if="!$route.meta.keepAlive"></router-view>
   </div>
 </template>
 
@@ -18,5 +21,6 @@ export default {
 #app{
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 </style>

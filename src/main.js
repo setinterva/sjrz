@@ -14,7 +14,7 @@ Vue.config.productionTip = false
 
 const store = new Vuex.Store({
 	state:{
-	  	userid:""
+      userid:"",
 	},
 	mutations:{
       change(state,b){

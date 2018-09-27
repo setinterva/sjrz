@@ -1,5 +1,13 @@
 <template>
-    <div class="individual">
+    <div class="individual" style="display:flex;flex-direction: column;">
+            <div class="header1" v-if="showtime"> 
+                <van-icon name="arrow-left" @click="back()"/>
+                <span>个体户</span>
+            </div>
+
+
+
+<div style="flex: 1;overflow-y: auto;width: 100%;">
             <p class="header">
                 <span>基本信息</span>
             </p>
@@ -16,14 +24,12 @@
                 <van-field v-model="postcode" clearable label="邮政编码" placeholder="请输入邮编" oninput="if(value.length > 6)value = value.slice(0, 6)"/>
                 <van-field v-model="email" clearable label="邮箱" placeholder="请输入邮箱" v-on:blur="changeCount(email)"/>
                 <van-field v-model="bankNumber" clearable label="结算卡联行号" placeholder="请输入结算卡联行号" oninput="if(value.length > 12)value = value.slice(0, 12)"/>
-                <van-field v-model="accounttype" clearable label="结算类型" placeholder="" />
-                <van-field v-model="accountremark" clearable label="结算备注" placeholder="" />
                 <van-field v-model="opennumber" clearable label="营业执照号码" placeholder="" oninput="if(value.length > 18)value = value.slice(0, 18)"/>
             </van-cell-group>
             <!-- 店铺类型 -->
             <div class="radiotask" style="border-bottom: 1px solid #ebebeb;padding-bottom: 10px;">
-                <span class="span">店铺类型</span>
-                <van-radio-group v-model="radiotask">
+                <span class="span" style="left: 15px;">店铺类型</span>
+                <van-radio-group v-model="radiotask" style="margin-left: 10px;">
                     <van-radio name="1">非任务店</van-radio>
                     <van-radio name="2">任务店</van-radio>
                 </van-radio-group>
@@ -42,17 +48,16 @@
 
             <!-- 子商户类型 start -->
                 <div class="businesstype" style="border-bottom: 1px solid #ebebeb;padding-bottom: 10px;padding-top: 5px;">
-                    <span class="span" style="margin-left: 15px;">商户类型</span>
-                    <select v-model="childlist">
-                        <option :value="item.tit" v-for="(item,index) in listarr">{{item.title}}</option>
-                    </select>
+                    <span class="span" style="margin-left: 15px;color: #333;">商户类型</span>
+                    <span @click="showtime1 = true" style="width: 70%;display: inline-block;margin-left: 10px;height: 20px;font-size: 14px;">{{showtime2}}</span>
+                    <van-actionsheet v-model="showtime1" :actions="listarr" @select="onselte"/>
                 </div>
             <!-- 子商户类型 end -->
 
 
             <!-- 商家地址 start -->
                     <div class="address">
-                        <div style="display: flex;padding: 5px 0 5px 15px;color: #666;font-size: 15px;"><span>商家地址</span><span @click="shenglist = true" v-text="address" style="display: inline-block;flex: 1;text-indent: 15px;"></span></div>
+                        <div style="display: flex;padding: 5px 0 5px 15px;color: #666;font-size: 15px;"><span style="color: #333;">商家地址</span><span @click="shenglist = true" v-text="address" style="display: inline-block;flex: 1;text-indent: 15px;"></span></div>
                         <vue-area :props-show="shenglist" :props-result="result" v-on:result="areaResult"></vue-area>
                         <van-field v-model="address1" clearable label="" placeholder="请输入详细地址" class="tit"/>
                     </div>
@@ -74,20 +79,12 @@
 
 
 
-        <!-- 结算方式 start -->
-            <div class="radiotask" style="border-bottom: 1px solid #ebebeb;padding-bottom: 10px;">
-                <span class="span">结算方式</span>
-                <van-radio-group v-model="cardtask1">
-                    <van-radio name="AUTO" style="margin-left: 10px;">自动</van-radio>
-                    <van-radio name="SELF">自主</van-radio>
-                </van-radio-group>
-            </div>
-        <!-- 结算方式 end -->
+        
 
 
         <!-- 经营类别 -->
             <div class="businesstask" style="border-bottom: 1px solid #ebebeb;">
-                <div style="display: flex;padding: 5px 0 5px 15px;color: #666;font-size: 15px;"><span>经营类别</span><span @click="show1 = true" v-text="ipt2" style="display: inline-block;flex: 1;text-indent: 15px;"></span></div>
+                <div style="display: flex;padding: 5px 0 5px 15px;color: #666;font-size: 15px;"><span style="color: #333;">经营类别</span><span @click="show1 = true" v-text="ipt2" style="display: inline-block;flex: 1;text-indent: 15px;"></span></div>
                 <van-picker v-if="show1" class="positi" :columns="columns1" value-key="title" show-toolbar title="经营类别" @cancel="show1 = false" @confirm="onConfirm1"/>
             </div>
         <!-- 经营类别 -->
@@ -157,16 +154,17 @@
             <div class="xieyi">
 
                     <van-radio-group v-model="xieyi">
-                        <van-radio name="1" style="font-size: 14px;padding: 10px 0 10px 12px;">我已阅读并同意<span style="color: #44d1c9;"><<优惠宝商家入驻协议>></span></van-radio>
+                        <van-radio name="1" style="font-size: 14px;padding: 10px 0 10px 12px;">我已阅读并同意<span style="color: #44d1c9;" @click="xieyi1"><<优慧宝商家入驻协议>></span></van-radio>
                     </van-radio-group>
 
                     <van-button type="primary" class="btn" style="margin-top: 15px;margin-bottom: 30px;" @click="submit()">确认</van-button>
             </div>
         </div>
+</div>
         <!-- 行业分类 mt start-->
                 <mt-popup v-model="popupVisible" popup-transition="popup-fade" class="industry" style="top: 0;">
                         <ul class="list">
-                            <li v-for="(item,index) in industryarr" @click="ipt(index)">{{item.title}}</li>
+                            <li v-for="(item,index) in industryarr" @click="ipt(index)" :key="index">{{item.title}}</li>
                         </ul>
                 </mt-popup>
         <!-- 行业分类  mt end-->
@@ -177,6 +175,10 @@
       
         <!-- 对私法人结算 -->
             <mt-popup v-model="popupVisible2" popup-transition="popup-fade" class="industry" style="top: 0;">
+                <div class="header1" v-if="showtime"> 
+                    <van-icon name="arrow-left" @click="back1()"/>
+                    <span>对私法人结算</span>
+                </div>
                      <van-cell-group>
                         <van-field v-model="username1" clearable label="姓名" placeholder="请输入法人收款姓名" />
                         <van-field v-model="banktype" clearable label="开户银行" placeholder="请输入开户银行" />
@@ -187,12 +189,12 @@
 
 
 
-
-
-
-
         <!-- 对私非法人结算 -->
             <mt-popup v-model="popupVisible3" popup-transition="popup-fade" class="industry" style="top: 0;">
+                <div class="header1" v-if="showtime"> 
+                    <van-icon name="arrow-left" @click="back2()"/>
+                    <span>对私非法人结算</span>
+                </div>
                      <van-cell-group>
                         <van-field v-model="username1" clearable label="姓名" placeholder="请输入法人收款姓名" />
                         <van-field v-model="banktype" clearable label="开户银行" placeholder="请输入开户银行" />
@@ -200,7 +202,6 @@
                     </van-cell-group>   
                     <div class="pic">
             <p>补充材料</p>
-            <span style="color: red; font-size: 14px;display: inline-block;margin-left: 10px;">结算账号指定书下载</span>
             <div class="photo">
                 <div class="pic" v-if="imgUrl4 != ''">
                     <van-icon name="close" style="position: absolute;right: 0;top: 0;font-size: 20px; color: #666;" @click="imgUrl4 = ''"/>
@@ -309,7 +310,7 @@ export default {
             am1:"开始",                     //开始时间
             pm1:"结束",                      //结束时间
             industryarr:[{id:1,title:"酒店"},{id:2,title:"娱乐"},{id:3,title:"美食"},{id:4,title:"建材"},{id:5,title:"丽人"},{id:6,title:"同城派送"},{id:7,title:"休闲度假"},{id:8,title:"购物/商城"},{id:9,title:"居家生活"},{id:10,title:"生活服务"}],
-            listarr:[{tit:"PERSON",title:"个人商户"},{tit:"INDIVIDUALBISS",title:"个体工商户"},{tit:"INSTITUTION",title:"事业单位商户"},{tit:"ENTERPRISE",title:"企业商户"}],
+            listarr:[{tit:"PERSON",name:"个人商户"},{tit:"INDIVIDUALBISS",name:"个体工商户"},{tit:"INSTITUTION",name:"事业单位商户"},{tit:"ENTERPRISE",name:"企业商户"}],
             columns:[],
             columns1:[{id:"OFFLINE_RETAIL",title:"线下零售"},{id:"FOOD_BEVERAGE",title:"餐饮/食品"},{id:"TICKETING_TRAVEL",title:"票务/旅游"},{id:"EDUCATION_TRAINING",title:"教育/培训"},{id:"LIFE_ADVISORY_SERVICE",title:"生活/咨询服务"},{id:"ENTERTAINMENT_FITNESS_SERVICES",title:"娱乐/健身服务"},{id:"MEDICAL_CARE",title:"医疗"},{id:"COLLECTION_AUCTION",title:"收藏/拍卖"},{id:"LOGISTICS_EXPRESS",title:"物流/快递"},{id:"PUBLIC_WELFARE",title:"公益"},{id:"COMMUNICATION",title:"通讯"},{id:"FINANCE_INSURANCE",title:"金融/保险"},{id:"NETWORK_VIRTUAL_SERVICE",title:"网络虚拟服务"},{id:"LIVING_PAYMENT",title:"生活缴费"},{id:"HOTEL",title:"酒店"},{id:"HOME_FURNISHING",title:"家居"},{id:"GROUP_PURCHASE",title:"电商团购"},{id:"LOTTERY",title:"彩票"},{id:"FASHION",title:"时尚"},{id:"UTILITIES_EXPENSE",title:"公共事业缴费"},{id:"REAL_ESTATE",title:"房地产"},{id:"TRANSPORTATION_SERVICE",title:"交通运输服务类"},{id:"MACHINE_ELECTRON",title:"机械/电子"},{id:"SOFTWARE",title:"软件"},{id:"DECORATION",title:"装饰"},{id:"GREEN_SEEDLING",title:"苗木/绿化"},{id:"MATERNAL_CHILD_PRODUCT",title:"母婴/玩具"},{id:"COLLECTION_PET",title:"收藏/宠物"},{id:"BOOK_STATIONERY_AUDIO_VIDEO",title:"书籍/音像/文具"},{id:"BUSINESS_PLATFORM",title:"平台商"},{id:"DIGITAL",title:"数码"},{id:"DIGITAL_ENTERTAINMENT",title:"数字娱乐"},{id:"ABROAD",title:"境外"},{id:"PREPAID_CARD",title:"预付卡"},{id:"DIRECT_SELLING",title:"直销"},{id:"CROWD_FUNDING",title:"众筹"},{id:"OTHER",title:"其他"}],
             imgUrl:"",                 //营业执照
@@ -342,11 +343,31 @@ export default {
             test3:null,
             test4:null,
             test5:null,
-            test6:null
+            test6:null,
+            showtime:true,
+            pay_way1:"",
+            showtime1:false,
+            showtime2:""
 
         }
     },
     methods:{
+        back(){
+            this.$router.push("/index")
+        },
+        back1(){
+            if(this.username1 == '' && this.banktype == '' && this.account == ''){
+                    this.settle = "0"
+            }
+            this.popupVisible2 = false
+        },
+        back2(){
+                if(this.username1 == '' && this.banktype == '' && this.account == '' || this.imgUrl4 == '' || this.imgUrl5 == '' || this.imgUrl6 == '' || this.imgUrl7 == ''){
+                alert("请完善个人信息")
+            }else{
+                this.popupVisible3 = false
+            }
+        },
         ipt(index){    //行业分类
             this.industry = this.industryarr[index].title;
             this.industry1 = this.industryarr[index].id;
@@ -498,9 +519,9 @@ export default {
             }
         },
         change1(point){
-          var leg =  /^[0]\.[0-9]{2}$/
+          var leg =  /^[0]\.[0-9]{1,2}$/
           if(!leg.test(point)){
-              alert("请输入0~1之间的两位小数")
+              alert("输入错误请重新输入")
               this.point = ''
           }
         },
@@ -511,12 +532,27 @@ export default {
             this.popupVisible2 = false
         },
         tap1(){
-            if(this.username1 == '' && this.banktype == '' && this.account == ''){
-                this.settle = "0"
+            if(this.username1 == '' && this.banktype == '' && this.account == '' || this.imgUrl4 == '' || this.imgUrl5 == '' || this.imgUrl6 == '' || this.imgUrl7 == ''){
+                alert("请完善个人信息")
+            }else{
+                this.popupVisible3 = false
             }
-            this.popupVisible3 = false
+            
+        },
+        xieyi1(){
+            this.$router.push("/logo2")
+        },
+        onselte(item){
+            this.showtime2 = item.name
+            this.childlist = item.tit
+            this.showtime1 = false
         },
         submit(){
+                if(this.dianpu == '' || this.phoneNumber == '' || this.username == '' || this.cardid == '' || this.industry1 == '' || this.point == '' || this.postcode == '' || this.email == '' || this.bankNumber == '' || this.opennumber == '' || this.radiotask == '' || this.childlist == '' || this.iptNumber == '' || this.address1 == '' || this.province == '' || this.city == '' || this.town == '' || this.imgUrl == '' || this.imgUrl2 == '' || this.imgUrl3 == '' || this.username1 == '' || this.banktype == '' || this.account == '' || this.am1 == '' || this.pm1 == '' ||  this.ipt2 == '' || this.server1 == ''){
+                    alert("请完善个人信息")
+                    
+                }else{
+
             var _this = this;
                 var jingdu = "";
                 var weidu = "";
@@ -562,8 +598,8 @@ export default {
                     form.append("account_name",_this.username1)
                     form.append("account_no",_this.account)
                     form.append("settle_bank_type","TOPRIVATE")
-                    form.append("settlement_period",_this.accounttype)
-                    form.append("settlement_mode",_this.cardtask1)
+                    form.append("settlement_period","D1")
+                    form.append("settlement_mode","AUTO")
                     form.append("settlement_remark",_this.accountremark)
                     form.append("merchant_category",_this.iptNumber1)
                     form.append("industry_type_code",_this.iptNumber)
@@ -578,7 +614,7 @@ export default {
                     form.append("serve",_this.server1)
                     form.append("lt_num",jingdu)
                     form.append("wt_num",weidu )
-                   
+                    form.append("pay_way",_this.pay_way1)
                           $.ajax({
                                 url:"http://ht.yhbapp.com/api/shop/setShopSettled",
                                 type:"POST",
@@ -588,7 +624,7 @@ export default {
                                 contentType:false,
                                 success:function(data){
                                     if(data.status.code == "200"){
-                                          _this.$router.push("/logo") 
+                                          _this.$router.push("/logo1") 
                                     }else{
                                         alert(data.status.message)
                                     }                    
@@ -627,8 +663,8 @@ export default {
                     form.append("account_name",_this.username1)
                     form.append("account_no",_this.account)
                     form.append("settle_bank_type","TOPRIVATE")
-                    form.append("settlement_period",_this.accounttype)
-                    form.append("settlement_mode",_this.cardtask1)
+                    form.append("settlement_period","D1")
+                    form.append("settlement_mode","AUTO")
                     form.append("settlement_remark",_this.accountremark)
                     form.append("merchant_category",_this.iptNumber1)
                     form.append("industry_type_code",_this.iptNumber)
@@ -643,6 +679,7 @@ export default {
                     form.append("serve",_this.server1)
                     form.append("lt_num",jingdu)
                     form.append("wt_num",weidu )
+                    form.append("pay_way",_this.pay_way1)
                           $.ajax({
                                 url:"http://ht.yhbapp.com/api/shop/setShopSettled",
                                 type:"POST",
@@ -652,7 +689,7 @@ export default {
                                 contentType:false,
                                 success:function(data){
                                     if(data.status.code == "200"){
-                                         _this.$router.push("/logo")
+                                         _this.$router.push("/logo1")
                                     }else{
                                         alert(data.status.message)
                                     }                    
@@ -663,6 +700,7 @@ export default {
                 }
         }
     )}
+        }
     },
     mounted(){
         var _this = this;
@@ -688,6 +726,14 @@ export default {
                 return str;
             }
         })()
+        ;(function(){
+            var u = navigator.userAgent;
+                if (u.indexOf('iPhone') > -1) {//苹果手机
+                    _this.showtime = false
+                }else{
+                    _this.showtime = true
+                }
+        })()
     },
     watch:{
         address:function(a){
@@ -712,6 +758,11 @@ export default {
             if(leg.test(a)){
                 this.bankNumber = ""   
             }
+        },
+        radiotask:function(a){
+            if(a == "1"){
+                this.pay_way1 = 2
+            }
         }
     }
 }
@@ -730,6 +781,23 @@ export default {
 </style>
 
 <style scoped>
+.header1{
+    height: 45px;
+    background: #Fad211;
+    width: 100%;
+    line-height: 45px;
+    text-align: center;
+    color: #fff;
+    display: flex;
+    align-items: center
+}
+.header1>i{
+    display: inline-block;
+    padding: 0 10px;
+}
+.header1>span{
+    flex: 1;
+}
 .individual{
     height: 100%;
     overflow-y: auto;
@@ -747,9 +815,8 @@ export default {
     color: #333;
 }
 .radiotask{
-    width: 345px;
+    width: 100%;
     height: 24px;
-    padding: 10px 15px;
 }
 .radiotask>span{
     position: relative;
