@@ -92,7 +92,7 @@
 
 
         <!-- 服务范围 -->
-        <p class="bg">服务范围</p>
+        <p class="bg" style="color: #333;">服务范围</p>
         <textarea name="" id="" cols="" rows="" style="width: 99%;height: 35px;border: 0;text-indent: 10px;" v-model="server1"></textarea>
         <!-- 服务范围 end -->   
         <div class="pic">

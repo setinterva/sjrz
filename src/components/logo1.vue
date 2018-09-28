@@ -5,7 +5,7 @@
             <span>审核中</span>
         </div>
         <div>
-            <img src="http://ht.yhbapp.com/public/static/api/static/img/act_shenhe.png" alt="">
+            <img src="public/static/api/static/img/act_shenhe.png" alt="">
         </div>
     </div>
 </template>
