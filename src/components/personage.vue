@@ -20,7 +20,7 @@
                 <van-field v-model="username" clearable label="姓名" placeholder="请输入姓名" />
                 <van-field v-model="cardid" clearable label="身份证号" placeholder="请输入身份证号" oninput="if(value.length > 18)value = value.slice(0, 18)"/>
                 <van-field v-model="industry" clearable label="店铺类型" placeholder="请选择行业" @click="popupVisible = true"/>
-                <van-field v-model="point" clearable label="扣点" placeholder="请输入扣点(平台扣款比例0~1)" v-on:blur="change1(point)"/>
+                <p style="position: relative;"><van-field v-model="point" clearable label="扣点" placeholder="请输入扣点(平台扣款比例0~1)" v-on:blur="change1(point)"/><span style="position: absolute;right: 15%;top: 25%;z-index: 9;">%</span></p>
                 <van-field v-model="postcode" clearable label="邮政编码" placeholder="请输入邮编" oninput="if(value.length > 6)value = value.slice(0, 6)"/>
                 <van-field v-model="email" clearable label="邮箱" placeholder="请输入邮箱" v-on:blur="changeCount(email)"/>
                 <van-field v-model="bankNumber" clearable label="结算卡联行号" placeholder="请输入结算卡联行号" oninput="if(value.length > 12)value = value.slice(0, 12)"/>
@@ -187,6 +187,7 @@
 </template>
 
 <script>
+import { Dialog } from 'vant' 
 import axios from "axios"
 import $ from "jquery"
 import vueArea from 'vue-area'
@@ -268,7 +269,7 @@ export default {
             showtime:false,
             pay_way1:"",
             showtime1:false,
-            showtime2:""
+            showtime2:"",
 
         }
     },
@@ -306,7 +307,7 @@ export default {
             this.pm1 = a;
             this.flage1 = false;
         },
-        upload(e){                                                   //营业执照
+        upload(e){                                                   //营业执照 
             var _this = this;
             let reader = new FileReader();
             var AllowImgFileSize = 2100000; //上传图片最大值(单位字节)（ 2 M = 2097152 B ）超过2M上传失败
@@ -370,9 +371,9 @@ export default {
             }
         },
         change1(point){
-          var leg =  /^[0]\.[0-9]{1,2}$/
+          var leg =  /^[0]\.[0-9]{2,4}$/
           if(!leg.test(point)){
-              alert("输入错误请重新输入")
+              alert("请小数点后跟2~4位")
               this.point = ''
           }
         },
@@ -385,7 +386,7 @@ export default {
             this.showtime1 = false
         },
         submit(){
-                if(this.dianpu == '' || this.phoneNumber == '' || this.username == '' || this.cardid == '' || this.industry1 == '' || this.point == '' || this.postcode == '' || this.email == '' || this.bankNumber == '' || this.opennumber == '' || this.radiotask == '' || this.childlist == '' || this.iptNumber == '' || this.address1 == '' || this.province == '' || this.city == '' || this.town == '' || this.imgUrl == '' || this.imgUrl2 == '' || this.imgUrl3 == '' || this.username1 == '' || this.banktype == '' || this.account == '' || this.am1 == '' || this.pm1 == '' ||  this.ipt2 == '' || this.server1 == ''){
+                if(this.dianpu == '' || this.phoneNumber == '' || this.username == '' || this.cardid == '' || this.industry1 == '' || this.point == '' || this.postcode == '' || this.email == '' || this.bankNumber == '' || this.radiotask == '' || this.childlist == '' || this.iptNumber == '' || this.address1 == '' || this.province == '' || this.city == '' || this.town == '' || this.imgUrl == '' || this.imgUrl2 == '' || this.imgUrl3 == '' || this.username1 == '' || this.banktype == '' || this.account == '' || this.am1 == '' || this.pm1 == '' ||  this.ipt2 == '' || this.server1 == ''){
                     alert("请完善个人信息")
                     
                 }else{
@@ -457,7 +458,12 @@ export default {
                                 contentType:false,
                                 success:function(data){
                                     if(data.status.code == "200"){
-                                          _this.$router.push("/logo1") 
+                                        Dialog.alert({
+                                                title: '资料已提交!',
+                                                confirmButtonText:"返回"
+                                            }).then(() => {
+                                                _this.$router.push("/index")
+                                            }); 
                                     }else{
                                         alert(data.status.message)
                                     }                    

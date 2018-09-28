@@ -1,5 +1,5 @@
 <template>
-    <div class="logo2" style="display:flex;flex-direction: column;">
+    <div class="logo3" style="display:flex;flex-direction: column;">
         <div class="header1" v-if="showtime"> 
             <van-icon name="arrow-left" @click="back()"/>
             <span>入驻协议</span>
@@ -48,18 +48,18 @@ export default {
 }
 </script>
 <style>
-.logo>div .content p span{
+.logo3>div .content p span{
     display: inline;
 }
 </style>
 
 <style scoped>
-.logo2{
+.logo3{
     width:100%;
     height: 100%;
     overflow-y: auto;
 }
-.logo>div{
+.logo3>div{
     width: 100%;
 }
 .header1{

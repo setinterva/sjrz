@@ -20,7 +20,7 @@
                 <van-field v-model="username" clearable label="姓名" placeholder="请输入姓名" />
                 <van-field v-model="cardid" clearable label="身份证号" placeholder="请输入身份证号" oninput="if(value.length > 18)value = value.slice(0, 18)"/>
                 <van-field v-model="industry" clearable label="店铺类型" placeholder="请选择行业" @click="popupVisible = true"/>
-                <van-field v-model="point" clearable label="扣点" placeholder="请输入扣点(平台扣款比例0~1)" v-on:blur="change1(point)"/>
+                <p style="position: relative;"><van-field v-model="point" clearable label="扣点" placeholder="请输入扣点(平台扣款比例0~1)" v-on:blur="change1(point)"/><span style="position: absolute;right: 15%;top: 25%;z-index: 9;">%</span></p>
                 <van-field v-model="postcode" clearable label="邮政编码" placeholder="请输入邮编" oninput="if(value.length > 6)value = value.slice(0, 6)"/>
                 <van-field v-model="email" clearable label="邮箱" placeholder="请输入邮箱" v-on:blur="changeCount(email)"/>
                 <van-field v-model="bankNumber" clearable label="结算卡联行号" placeholder="请输入结算卡联行号" oninput="if(value.length > 12)value = value.slice(0, 12)"/>
@@ -262,6 +262,7 @@
 </template>
 
 <script>
+import { Dialog } from 'vant'
 import axios from "axios"
 import $ from "jquery"
 import vueArea from 'vue-area'
@@ -271,7 +272,7 @@ export default {
         vueArea
     },
     data(){
-        return{
+        return{  
             result:null,
             dianpu : "",                 //店铺名称
             phoneNumber : "",            //电话
@@ -362,11 +363,10 @@ export default {
             this.popupVisible2 = false
         },
         back2(){
-                if(this.username1 == '' && this.banktype == '' && this.account == '' || this.imgUrl4 == '' || this.imgUrl5 == '' || this.imgUrl6 == '' || this.imgUrl7 == ''){
-                alert("请完善个人信息")
-            }else{
-                this.popupVisible3 = false
+            if(this.username1 == '' && this.banktype == '' && this.account == '' || this.imgUrl4 == '' || this.imgUrl5 == '' || this.imgUrl6 == '' || this.imgUrl7 == ''){
+                this.settle = "0"
             }
+                this.popupVisible3 = false
         },
         ipt(index){    //行业分类
             this.industry = this.industryarr[index].title;
@@ -519,9 +519,9 @@ export default {
             }
         },
         change1(point){
-          var leg =  /^[0]\.[0-9]{1,2}$/
+          var leg =  /^[0]\.[0-9]{2,4}$/
           if(!leg.test(point)){
-              alert("输入错误请重新输入")
+              alert("请小数点后跟2~4位")
               this.point = ''
           }
         },
@@ -533,10 +533,10 @@ export default {
         },
         tap1(){
             if(this.username1 == '' && this.banktype == '' && this.account == '' || this.imgUrl4 == '' || this.imgUrl5 == '' || this.imgUrl6 == '' || this.imgUrl7 == ''){
-                alert("请完善个人信息")
-            }else{
-                this.popupVisible3 = false
+                this.settle = "0"
             }
+                this.popupVisible3 = false
+            
             
         },
         xieyi1(){
@@ -624,7 +624,12 @@ export default {
                                 contentType:false,
                                 success:function(data){
                                     if(data.status.code == "200"){
-                                          _this.$router.push("/logo1") 
+                                        Dialog.alert({
+                                                title: '资料已提交!',
+                                                confirmButtonText:"返回"
+                                            }).then(() => {
+                                                _this.$router.push("/index")
+                                            }); 
                                     }else{
                                         alert(data.status.message)
                                     }                    
@@ -689,7 +694,12 @@ export default {
                                 contentType:false,
                                 success:function(data){
                                     if(data.status.code == "200"){
-                                         _this.$router.push("/logo1")
+                                        Dialog.alert({
+                                                title: '资料已提交!',
+                                                confirmButtonText:"返回"
+                                            }).then(() => {
+                                                _this.$router.push("/index")
+                                            });
                                     }else{
                                         alert(data.status.message)
                                     }                    

@@ -48,7 +48,7 @@ export default {
 }
 </script>
 <style>
-.logo>div .content p span{
+.logo2>div .content p span{
     display: inline;
 }
 </style>
@@ -59,7 +59,7 @@ export default {
     height: 100%;
     overflow-y: auto;
 }
-.logo>div{
+.logo2>div{
     width: 100%;
 }
 .header1{
