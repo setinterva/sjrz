@@ -58,7 +58,6 @@
             <!-- 商家地址 start -->
                     <div class="address">
                         <div style="display: flex;padding: 5px 0 5px 15px;color: #666;font-size: 15px;"><span style="color: #333;">商家地址</span><span @click="shenglist = true" v-text="address" style="display: inline-block;flex: 1;text-indent: 15px;"></span></div>
-                        <vue-area :props-show="shenglist" :props-result="result" v-on:result="areaResult"></vue-area>
                         <van-field v-model="address1" clearable label="" placeholder="请输入详细地址" class="tit"/>
                     </div>
             <!-- 商家地址 end -->
@@ -187,8 +186,8 @@
                     </van-cell-group>    
             </mt-popup>
 
-
-
+        <!-- 选址 -->
+            <vue-area :props-show="shenglist" :props-result="result" v-on:result="areaResult"></vue-area>
         <!-- 对私非法人结算 -->
             <mt-popup v-model="popupVisible3" popup-transition="popup-fade" class="industry" style="top: 0;">
                 <div class="header1" v-if="showtime"> 
@@ -242,6 +241,7 @@
                 </div>
                 
             </div>
+
             <!-- 结算人身份证正面照 -->
             <div class="photo">
                 <div class="pic" v-if="imgUrl7 != ''">
@@ -623,16 +623,13 @@ export default {
                                 processData:false,
                                 contentType:false,
                                 success:function(data){
-                                    if(data.status.code == "200"){
                                         Dialog.alert({
                                                 title: '资料已提交!',
                                                 confirmButtonText:"返回"
                                             }).then(() => {
                                                 _this.$router.push("/index")
                                             }); 
-                                    }else{
-                                        alert(data.status.message)
-                                    }                    
+                                                       
                                 }
                             })                            
                         
@@ -693,16 +690,12 @@ export default {
                                 processData:false,
                                 contentType:false,
                                 success:function(data){
-                                    if(data.status.code == "200"){
                                         Dialog.alert({
                                                 title: '资料已提交!',
                                                 confirmButtonText:"返回"
                                             }).then(() => {
                                                 _this.$router.push("/index")
-                                            });
-                                    }else{
-                                        alert(data.status.message)
-                                    }                    
+                                            });                  
                                 }
                             })                            
                 }else{

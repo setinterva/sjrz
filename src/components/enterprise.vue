@@ -55,7 +55,6 @@
             <!-- 商家地址 start -->
                     <div class="address">
                         <div style="display: flex;padding: 5px 0 5px 15px;color: #666;font-size: 15px;"><span style="color: #333;">商家地址</span><span @click="shenglist = true" v-text="address" style="display: inline-block;flex: 1;text-indent: 15px;"></span></div>
-                        <vue-area :props-show="shenglist" :props-result="result" v-on:result="areaResult"></vue-area>
                         <van-field v-model="address1" clearable label="" placeholder="请输入详细地址" class="tit"/>
                     </div>
             <!-- 商家地址 end -->
@@ -201,6 +200,8 @@
             </mt-popup>
 
 
+        <!-- 选址 -->
+        <vue-area :props-show="shenglist" :props-result="result" v-on:result="areaResult"></vue-area>
 
         <!-- 对私非法人结算 -->
             <mt-popup v-model="popupVisible3" popup-transition="popup-fade" class="industry" style="top: 0;">
@@ -415,7 +416,7 @@ export default {
             this.pm1 = a;
             this.flage1 = false;
         },
-        upload(e){                                                   //营业执照
+        upload(e){                                                //营业执照
             var _this = this;
             let reader = new FileReader();
             var AllowImgFileSize = 2100000; //上传图片最大值(单位字节)（ 2 M = 2097152 B ）超过2M上传失败
@@ -667,16 +668,12 @@ export default {
                                 processData:false,
                                 contentType:false,
                                 success:function(data){
-                                    if(data.status.code == "200"){
                                        Dialog.alert({
                                                 title: '资料已提交!',
                                                 confirmButtonText:"返回"
                                             }).then(() => {
                                                 _this.$router.push("/index")
-                                            });
-                                    }else{
-                                        alert(data.status.message)
-                                    }                  
+                                            });                 
                                 }
                             })
 
@@ -735,16 +732,13 @@ export default {
                                 processData:false,
                                 contentType:false,
                                 success:function(data){
-                                    if(data.status.code == "200"){
+                                
                                         Dialog.alert({
                                                 title: '资料已提交!',
                                                 confirmButtonText:"返回"
                                             }).then(() => {
                                                 _this.$router.push("/index")
                                             });
-                                    }else{
-                                        alert(data.status.message)
-                                    }
                                                       
                                 }
                             })
@@ -807,16 +801,12 @@ export default {
                             processData:false,
                             contentType:false,
                             success:function(data){
-                               if(data.status.code == "200"){
                                         Dialog.alert({
                                                 title: '资料已提交!',
                                                 confirmButtonText:"返回"
                                             }).then(() => {
                                                 _this.$router.push("/index")
-                                            });
-                                    }else{
-                                        alert(data.status.message)
-                                    }                  
+                                            });                 
                             }
                         })                            
                         
