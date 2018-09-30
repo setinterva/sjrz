@@ -49,7 +49,7 @@
             <!-- 子商户类型 start -->
                 <div class="businesstype" style="border-bottom: 1px solid #ebebeb;padding-bottom: 10px;padding-top: 5px;">
                     <span class="span" style="margin-left: 15px;color: #333;">商户类型</span>
-                    <span @click="showtime1 = true" style="width: 70%;display: inline-block;margin-left: 10px;height: 20px;font-size: 14px;">{{showtime2}}</span>
+                    <span @click="showtime1 = true" style="width: 70%;display: inline-block;margin-left: 10px;height: 19px;font-size: 14px;">{{showtime2}}</span>
                     <van-actionsheet v-model="showtime1" :actions="listarr" @select="onselte"/>
                 </div>
             <!-- 子商户类型 end -->
@@ -262,6 +262,7 @@
 </template>
 
 <script>
+import { Toast } from 'vant';
 import { Dialog } from 'vant'
 import axios from "axios"
 import $ from "jquery"
@@ -348,7 +349,7 @@ export default {
             showtime:true,
             pay_way1:"",
             showtime1:false,
-            showtime2:""
+            showtime2:"请选择"
 
         }
     },
@@ -553,7 +554,11 @@ export default {
                     
                 }else{
 
-            var _this = this;
+                        Toast.loading({
+                            mask: true,
+                            message: '提交中...'
+                        });
+                var _this = this;
                 var jingdu = "";
                 var weidu = "";
                 // console.log(this.address)
@@ -623,6 +628,7 @@ export default {
                                 processData:false,
                                 contentType:false,
                                 success:function(data){
+                                    Toast.clear();
                                         Dialog.alert({
                                                 title: '资料已提交!',
                                                 confirmButtonText:"返回"
@@ -690,6 +696,7 @@ export default {
                                 processData:false,
                                 contentType:false,
                                 success:function(data){
+                                    Toast.clear();
                                         Dialog.alert({
                                                 title: '资料已提交!',
                                                 confirmButtonText:"返回"
@@ -765,6 +772,13 @@ export default {
         radiotask:function(a){
             if(a == "1"){
                 this.pay_way1 = 2
+            }
+        },
+        shenglist:function(a){
+            if(a == true){
+                $("html").css("position","fixed")
+            }else{
+                $("html").css("position","static")
             }
         }
     }

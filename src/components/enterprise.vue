@@ -46,7 +46,7 @@
             <!-- 商户类型 start -->
                 <div class="businesstype" style="border-bottom: 1px solid #ebebeb;padding-bottom: 10px;padding-top: 5px;">
                     <span class="span" style="margin-left: 15px;color: #333;">商户类型</span>
-                    <span @click="showtime1 = true" style="width: 70%;display: inline-block;margin-left: 10px;height: 20px;font-size: 14px;">{{showtime2}}</span>
+                    <span @click="showtime1 = true" style="width: 70%;display: inline-block;margin-left: 10px;height: 19px;font-size: 14px;">{{showtime2}}</span>
                     <van-actionsheet v-model="showtime1" :actions="listarr" @select="onselte"/>
                 </div>
             <!-- 商户类型 end -->
@@ -277,6 +277,7 @@
 </template>
 
 <script>
+import { Toast } from 'vant';
 import { Dialog } from 'vant'
 import axios from "axios"
 import $ from "jquery"
@@ -365,7 +366,7 @@ export default {
             showtime:true,
             pay_way1:"",
             showtime1:false,
-            showtime2:""
+            showtime2:"请选择"
 
         }
     },
@@ -594,11 +595,14 @@ export default {
             this.showtime1 = false
         },
         submit(){
-                if(this.dianpu == '' || this.phoneNumber == '' || this.username == '' || this.cardid == '' || this.industry1 == '' || this.point == '' || this.postcode == '' || this.email == '' || this.bankNumber == '' || this.opennumber == '' || this.radiotask == '' || this.childlist == '' || this.iptNumber == '' || this.address1 == '' || this.province == '' || this.city == '' || this.town == '' || this.imgUrl == '' || this.imgUrl1 == '' || this.imgUrl2 == '' || this.imgUrl3 == '' || this.username1 == '' || this.banktype == '' || this.account == '' || this.am1 == '' || this.pm1 == '' ||  this.ipt2 == '' || this.server1 == ''){
+                if(this.dianpu == '' || this.phoneNumber == '' || this.username == '' || this.industry1 == '' || this.cardid == '' || this.point == '' || this.postcode == '' || this.email == '' || this.bankNumber == '' || this.opennumber == '' || this.radiotask == '' || this.childlist == '' || this.iptNumber == '' || this.address1 == '' || this.province == '' || this.city == '' || this.town == '' || this.imgUrl == '' || this.imgUrl1 == '' || this.imgUrl2 == '' || this.imgUrl3 == '' || this.username1 == '' || this.banktype == '' || this.account == '' || this.am1 == '' || this.pm1 == '' ||  this.ipt2 == '' || this.server1 == ''){
                     alert("请完善个人信息")
                     
                 }else{
-
+                    Toast.loading({
+                        mask: true,
+                        message: '提交中...'
+                    });
                 var _this = this;
                 var jingdu = "";
                 var weidu = "";
@@ -668,6 +672,7 @@ export default {
                                 processData:false,
                                 contentType:false,
                                 success:function(data){
+                                        Toast.clear();
                                        Dialog.alert({
                                                 title: '资料已提交!',
                                                 confirmButtonText:"返回"
@@ -732,7 +737,7 @@ export default {
                                 processData:false,
                                 contentType:false,
                                 success:function(data){
-                                
+                                        Toast.clear();
                                         Dialog.alert({
                                                 title: '资料已提交!',
                                                 confirmButtonText:"返回"
@@ -801,6 +806,7 @@ export default {
                             processData:false,
                             contentType:false,
                             success:function(data){
+                                    Toast.clear();
                                         Dialog.alert({
                                                 title: '资料已提交!',
                                                 confirmButtonText:"返回"
@@ -883,6 +889,13 @@ export default {
         radiotask:function(a){
             if(a == "1"){
                 this.pay_way1 = 2
+            }
+        },
+        shenglist:function(a){
+            if(a == true){
+                $("html").css("position","fixed")
+            }else{
+                $("html").css("position","static")
             }
         }
     }

@@ -45,13 +45,13 @@
             <!-- 行业类型  end -->
 
 
-            <!-- 子商户类型 start -->
+            <!-- 商户类型 start -->
                 <div class="businesstype" style="border-bottom: 1px solid #ebebeb;padding-bottom: 10px;padding-top: 5px;">
                     <span class="span" style="margin-left: 15px;color: #333;">商户类型</span>
-                    <span @click="showtime1 = true" style="width: 70%;display: inline-block;margin-left: 10px;height: 20px;font-size: 14px;">{{showtime2}}</span>
+                    <span @click="showtime1 = true" style="width: 70%;display: inline-block;margin-left: 10px;height: 19px;font-size: 14px;">{{showtime2}}</span>
                     <van-actionsheet v-model="showtime1" :actions="listarr" @select="onselte"/>
                 </div>
-            <!-- 子商户类型 end -->
+            <!-- 商户类型 end -->
 
 
             <!-- 商家地址 start -->
@@ -182,6 +182,7 @@
 </template>
 
 <script>
+import { Toast } from 'vant';
 import { Dialog } from 'vant' 
 import axios from "axios"
 import $ from "jquery"
@@ -264,7 +265,7 @@ export default {
             showtime:false,
             pay_way1:"",
             showtime1:false,
-            showtime2:"",
+            showtime2:"请选择",
 
         }
     },
@@ -385,6 +386,10 @@ export default {
                     alert("请完善个人信息")
                     
                 }else{
+                    Toast.loading({
+                            mask: true,
+                            message: '提交中...'
+                        });
                 var _this = this;
                     var jingdu = "";
                 var weidu = "";
@@ -452,7 +457,7 @@ export default {
                                 processData:false,
                                 contentType:false,
                                 success:function(data){
-                                    
+                                        Toast.clear();
                                         Dialog.alert({
                                                 title: '资料已提交!',
                                                 confirmButtonText:"返回"
@@ -539,6 +544,13 @@ export default {
             if(a == "1"){
                 this.pay_way1 = 2
             }
+        },
+        shenglist:function(a){
+            if(a == true){
+                $("html").css("position","fixed")
+            }else{
+                $("html").css("position","static")
+            }
         }
     }
 }
@@ -591,7 +603,7 @@ export default {
     color: #333;
 }
 .radiotask{
-    width: 345px;
+    width: 100%;
     height: 24px;
 }
 .radiotask>span{
