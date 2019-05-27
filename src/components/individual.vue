@@ -20,23 +20,21 @@
                 <van-field v-model="username" clearable label="姓名" placeholder="请输入姓名" />
                 <van-field v-model="cardid" clearable label="身份证号" placeholder="请输入身份证号" oninput="if(value.length > 18)value = value.slice(0, 18)"/>
                 <van-field v-model="industry" clearable label="店铺类型" placeholder="请选择行业" @click="popupVisible = true"/>
-                <p style="position: relative;"><van-field v-model="point" clearable label="扣点" placeholder="请输入扣点(平台扣款比例0~1)" v-on:blur="change1(point)"/><span style="position: absolute;right: 15%;top: 25%;z-index: 9;">%</span></p>
-                <van-field v-model="postcode" clearable label="邮政编码" placeholder="请输入邮编" oninput="if(value.length > 6)value = value.slice(0, 6)"/>
-                <van-field v-model="email" clearable label="邮箱" placeholder="请输入邮箱" v-on:blur="changeCount(email)"/>
-                <van-field v-model="bankNumber" clearable label="结算卡联行号" placeholder="请输入结算卡联行号" oninput="if(value.length > 12)value = value.slice(0, 12)"/>
+                <p style="position: relative;"><van-field v-model="point" clearable label="扣点" placeholder="请输入扣点(平台扣款比例0.25~90)" v-on:blur="change1(point)" disabled/><span style="position: absolute;right: 15%;top: 25%;z-index: 9;">%</span></p>
+                
+                <!-- <van-field v-model="email" clearable label="邮箱" placeholder="请输入邮箱" v-on:blur="changeCount(email)"/> -->
+                <!-- <van-field v-model="bankNumber" clearable label="结算卡联行号" placeholder="请输入结算卡联行号" oninput="if(value.length > 12)value = value.slice(0, 12)"/> -->
                 <van-field v-model="opennumber" clearable label="营业执照号码" placeholder="" oninput="if(value.length > 18)value = value.slice(0, 18)"/>
             </van-cell-group>
             <!-- 店铺类型 -->
-            <div class="radiotask" style="border-bottom: 1px solid #ebebeb;padding-bottom: 10px;">
+            <!-- <div class="radiotask" style="border-bottom: 1px solid #ebebeb;padding-bottom: 10px;">
                 <span class="span" style="left: 15px;">店铺类型</span>
                 <van-radio-group v-model="radiotask" style="margin-left: 10px;">
                     <van-radio name="1">非任务店</van-radio>
                     <van-radio name="2">任务店</van-radio>
                 </van-radio-group>
-            </div>  
+            </div>   -->
             <!-- 店铺类型 end -->
-
-
 
             <!-- 行业类型 start -->
                 <div class="businesstask" style="border-bottom: 1px solid #ebebeb;">
@@ -47,13 +45,12 @@
 
 
             <!-- 子商户类型 start -->
-                <div class="businesstype" style="border-bottom: 1px solid #ebebeb;padding-bottom: 10px;padding-top: 5px;">
+                <!-- <div class="businesstype" style="border-bottom: 1px solid #ebebeb;padding-bottom: 10px;padding-top: 5px;">
                     <span class="span" style="margin-left: 15px;color: #333;">商户类型</span>
                     <span @click="showtime1 = true" style="width: 70%;display: inline-block;margin-left: 10px;height: 19px;font-size: 14px;">{{showtime2}}</span>
                     <van-actionsheet v-model="showtime1" :actions="listarr" @select="onselte"/>
-                </div>
+                </div> -->
             <!-- 子商户类型 end -->
-
 
             <!-- 商家地址 start -->
                     <div class="address">
@@ -62,24 +59,14 @@
                     </div>
             <!-- 商家地址 end -->
 
-
-
-
-
         <!-- 营业时间  start -->
-            <div class="timerselect" style="border-bottom: 1px solid #ebebeb;padding: 5px 0;">
+            <!-- <div class="timerselect" style="border-bottom: 1px solid #ebebeb;padding: 5px 0;">
                 <p><span>营业时间</span> <span @click="flage = true">{{am1}}</span> ~ <span @click="flage1 = true">{{pm1}}</span></p>
 
                 <van-datetime-picker v-if="flage" type="time" :min-hour="minHour" :max-hour="maxHour" style="position: fixed;left: 0;bottom: 0;width: 100%;z-index: 9999;" @confirm="am"/>
                 <van-datetime-picker v-if="flage1" type="time" :min-hour="minHour" :max-hour="maxHour" style="position: fixed;left: 0;bottom: 0;width: 100%;z-index: 9999;" @confirm="pm"/>
-           </div>
+           </div> -->
         <!-- 营业时间  end -->
-
-
-
-
-        
-
 
         <!-- 经营类别 -->
             <div class="businesstask" style="border-bottom: 1px solid #ebebeb;">
@@ -88,11 +75,9 @@
             </div>
         <!-- 经营类别 -->
 
-
-
         <!-- 服务范围 -->
-        <p class="bg" style="color: #333;">服务范围</p>
-        <textarea name="" id="" cols="" rows="" style="width: 99%;height: 35px;border: 0;text-indent: 10px;" v-model="server1"></textarea>
+        <!-- <p class="bg" style="color: #333;">服务范围</p> -->
+        <!-- <textarea name="" id="" cols="" rows="" style="width: 99%;height: 35px;border: 0;text-indent: 10px;" v-model="server1"></textarea> -->
         <!-- 服务范围 end -->   
         <div class="pic">
             <p>企业商户基本资料</p>
@@ -102,17 +87,13 @@
                     <img :src="imgUrl" style="width: 100%;height: 100%;">
                 </div>
                 <div v-else>
-                    <input type="file" id="upload" accept="image" @change="upload" style="display: none;">  
+                    <input type="file" id="upload" accept="image/*" multiple @change="upload" style="display: none;">  
                     <label for="upload">+</label>
                     <p>上传营业执照</p>
                 </div>
                 
             </div>
             <!-- 营业执照 end -->
-
-
-
-
 
             <!-- 法人身份证正面照 -->
             <div class="photo">
@@ -121,13 +102,11 @@
                     <img :src="imgUrl2" style="width: 100%;height: 100%;">
                 </div>
                 <div v-else>
-                    <input type="file" id="upload2" accept="image" @change="upload2" style="display: none;">  
+                    <input type="file" id="upload2" accept="image/*" multiple @change="upload2" style="display: none;">  
                     <label for="upload2">+</label>
                     <p>上传法人身份证正面照</p>
-                </div>
-                
+                </div> 
             </div>
-
             <!-- 法人身份证反面照 -->
             <div class="photo">
                 <div class="pic" v-if="imgUrl3 != ''">
@@ -135,25 +114,20 @@
                     <img :src="imgUrl3" style="width: 100%;height: 100%;">
                 </div>
                 <div v-else>
-                    <input type="file" id="upload3" accept="image" @change="upload3" style="display: none;">  
+                    <input type="file" id="upload3" accept="image/*" multiple @change="upload3" style="display: none;">  
                     <label for="upload3">+</label>
                     <p>上传法人身份证反面照</p>
                 </div>
             </div>
 
-
-
-            <van-radio-group v-model="settle" style="margin-top: 20px;" class="radio4">
+            <!-- <van-radio-group v-model="settle" style="margin-top: 20px;" class="radio4">
                 <van-radio name="2" @click="username1='',banktype='',account='',popupVisible2 = true">对私法人结算 <van-icon name="arrow" style="float: right;" /></van-radio>
                 <van-radio name="3" @click="username1='',banktype='',account='',popupVisible3 = true">对私非法人结算 <van-icon name="arrow" style="float: right;" /></van-radio>
-            </van-radio-group>
+            </van-radio-group> -->
             
-
-
             <div class="xieyi">
-
                     <van-radio-group v-model="xieyi">
-                        <van-radio name="1" style="font-size: 14px;padding: 10px 0 10px 12px;">我已阅读并同意<span style="color: #44d1c9;" @click="xieyi1"><<优慧宝商家入驻协议>></span></van-radio>
+                        <van-radio name="1" style="font-size: 14px;padding: 10px 0 10px 12px;">我已阅读并同意<span style="color: #44d1c9;" @click="xieyi1"><<盘一下商家入驻协议>></span></van-radio>
                     </van-radio-group>
 
                     <van-button type="primary" class="btn" style="margin-top: 15px;margin-bottom: 30px;" @click="submit()">确认</van-button>
@@ -229,7 +203,7 @@
             </div>
 
             <!-- 结算人身份证反面照 -->
-            <div class="photo">
+            <!-- <div class="photo">
                 <div class="pic" v-if="imgUrl6 != ''">
                     <van-icon name="close" style="position: absolute;right: 0;top: 0;font-size: 20px; color: #666;" @click="imgUrl6 = ''"/>
                     <img :src="imgUrl6" style="width: 100%;height: 100%;">
@@ -240,10 +214,10 @@
                     <p>上传法人身份证反面照</p>
                 </div>
                 
-            </div>
+            </div> -->
 
             <!-- 结算人身份证正面照 -->
-            <div class="photo">
+            <!-- <div class="photo">
                 <div class="pic" v-if="imgUrl7 != ''">
                     <van-icon name="close" style="position: absolute;right: 0;top: 0;font-size: 20px; color: #666;" @click="imgUrl7 = ''"/>
                     <img :src="imgUrl7" style="width: 100%;height: 100%;">
@@ -253,11 +227,12 @@
                     <label for="upload7">+</label>
                     <p>上传法人身份证正面照</p>
                 </div>
-            </div>
+            </div> -->
 
             <van-button type="primary" class="btn" style="margin-top: 15px;margin-bottom: 50px;" @click="tap1()">确认</van-button>
         </div>
             </mt-popup>
+            <canvas id="canvas" v-show="false"></canvas>
     </div>
 </template>
 
@@ -281,8 +256,7 @@ export default {
             cardid : "",                 //身份证号
             industry : "",               //行业分类
             industry1:"",                //行业分类传参
-            point : "",                  //扣点
-            postcode : "",               //邮政编码
+            point : "0.38",                  //扣点
             email : "",                  //邮箱
             bankNumber : "",             //结算卡联行号
             accounttype : "",            //结算类型
@@ -339,7 +313,7 @@ export default {
             rendom4:"",
             random5:"",
             suiji:null,
-            test:null,
+            test:null,                   //营业执照
             test1:null,
             test2:null,
             test3:null,
@@ -395,114 +369,192 @@ export default {
         },
         upload(e){                                                   //营业执照
             var _this = this;
-            let reader = new FileReader();
             var AllowImgFileSize = 2100000; //上传图片最大值(单位字节)（ 2 M = 2097152 B ）超过2M上传失败
-            var file = e.target.files[0];
-            this.test = file
-            var imgUrlBase64;
-            if (file) {
-                //将文件以Data URL形式读入页面  
-                imgUrlBase64 = reader.readAsDataURL(file);
-                reader.onload = function (e) {
-                    _this.imgUrl = reader.result;
-                    _this.random = _this.suiji();
-                    }
-                }
+            var file2 = e.target.files[0];
+            let imgName = file2.name;
+            let reader = new FileReader();
+            reader.readAsDataURL(file2)
+            reader.onload = function(e){
+                let result = e.target.result
+                var image = new Image();
+                image.src = result;
+                image.onload = function(){  
+                    var canvas = document.querySelector("#canvas");  
+                    var context = canvas.getContext("2d");  
+                    canvas.width = image.width; // 设置canvas的画布宽度为图片宽度  
+                    canvas.height = image.height;  
+                    context.drawImage(image, 0, 0, image.width, image.height) // 在canvas上绘制图片  
+                    let dataUrl = canvas.toDataURL('image/jpeg', 0.2) // 7为压缩比，可根据需要设置，设置过小会影响图片质量  
+                                            // dataUrl 为压缩后的图片资源，可将其上传到服务器  
+                    _this.imgUrl = dataUrl                        
+                    let file = _this.dataURLtoFile(dataUrl, imgName); 
+                    _this.test = file; 
+                    // console.log(file.name)
+                    }  
+            }
         },
         upload2(e){                   //法人身份证正面照
             var _this = this;
-            let reader = new FileReader();
             var AllowImgFileSize = 2100000; //上传图片最大值(单位字节)（ 2 M = 2097152 B ）超过2M上传失败
-            var file = e.target.files[0];
-            this.test1 = file
-            var imgUrlBase64;
-            if (file) {
-                //将文件以Data URL形式读入页面  
-                imgUrlBase64 = reader.readAsDataURL(file);
-                reader.onload = function (e) {
-                    _this.imgUrl2 = reader.result
-                    _this.random2 = _this.suiji();
-                    }
-                }
+            var file2 = e.target.files[0];
+            let imgName = file2.name;
+            let reader = new FileReader();
+            reader.readAsDataURL(file2)
+            reader.onload = function(e){
+                let result = e.target.result
+                var image = new Image();
+                image.src = result;
+                image.onload = function(){  
+                    var canvas = document.querySelector("#canvas");  
+                    var context = canvas.getContext("2d");  
+                    canvas.width = image.width; // 设置canvas的画布宽度为图片宽度  
+                    canvas.height = image.height;  
+                    context.drawImage(image, 0, 0, image.width, image.height) // 在canvas上绘制图片  
+                    let dataUrl = canvas.toDataURL('image/jpeg', 0.2) // 7为压缩比，可根据需要设置，设置过小会影响图片质量  
+                                            // dataUrl 为压缩后的图片资源，可将其上传到服务器  
+                    _this.imgUrl2 = dataUrl                        
+                    let file = _this.dataURLtoFile(dataUrl, imgName); 
+                    _this.test1= file; 
+                    }  
+            }
         },
         upload3(e){                   //法人身份证反面照
             var _this = this;
-            let reader = new FileReader();
             var AllowImgFileSize = 2100000; //上传图片最大值(单位字节)（ 2 M = 2097152 B ）超过2M上传失败
-            var file = e.target.files[0];
-            this.test2 = file
-            var imgUrlBase64;
-            if (file) {
-                //将文件以Data URL形式读入页面  
-                imgUrlBase64 = reader.readAsDataURL(file);
-                reader.onload = function (e) {
-                    _this.imgUrl3 = reader.result
-                    _this.random1 = _this.suiji();
-                    }
-                }
+            var file2 = e.target.files[0];
+            let imgName = file2.name;
+            let reader = new FileReader();
+            reader.readAsDataURL(file2)
+            reader.onload = function(e){
+                let result = e.target.result
+                var image = new Image();
+                image.src = result;
+                image.onload = function(){  
+                    var canvas = document.querySelector("#canvas");  
+                    var context = canvas.getContext("2d");  
+                    canvas.width = image.width; // 设置canvas的画布宽度为图片宽度  
+                    canvas.height = image.height;  
+                    context.drawImage(image, 0, 0, image.width, image.height) // 在canvas上绘制图片  
+                    let dataUrl = canvas.toDataURL('image/jpeg', 0.2) // 7为压缩比，可根据需要设置，设置过小会影响图片质量  
+                                            // dataUrl 为压缩后的图片资源，可将其上传到服务器  
+                    _this.imgUrl3 = dataUrl                        
+                    let file = _this.dataURLtoFile(dataUrl, imgName); 
+                    _this.test2 = file; 
+                    }  
+            }
         },
         upload4(e){                   //指定书照
             var _this = this;
-            let reader = new FileReader();
             var AllowImgFileSize = 2100000; //上传图片最大值(单位字节)（ 2 M = 2097152 B ）超过2M上传失败
-            var file = e.target.files[0];
-            this.test3 = file
-            var imgUrlBase64;
-            if (file) {
-                //将文件以Data URL形式读入页面  
-                imgUrlBase64 = reader.readAsDataURL(file);
-                reader.onload = function (e) {
-                    _this.imgUrl4 = reader.result
-                    }
-                }
+            var file2 = e.target.files[0];
+            let imgName = file2.name;
+            let reader = new FileReader();
+            reader.readAsDataURL(file2)
+            reader.onload = function(e){
+                let result = e.target.result
+                var image = new Image();
+                image.src = result;
+                image.onload = function(){  
+                    var canvas = document.querySelector("#canvas");  
+                    var context = canvas.getContext("2d");  
+                    canvas.width = image.width; // 设置canvas的画布宽度为图片宽度  
+                    canvas.height = image.height;  
+                    context.drawImage(image, 0, 0, image.width, image.height) // 在canvas上绘制图片  
+                    let dataUrl = canvas.toDataURL('image/jpeg', 0.2) // 7为压缩比，可根据需要设置，设置过小会影响图片质量  
+                                            // dataUrl 为压缩后的图片资源，可将其上传到服务器  
+                    _this.imgUrl4 = dataUrl                        
+                    let file = _this.dataURLtoFile(dataUrl, imgName); 
+                    _this.test3 = file; 
+                    }  
+            }
         },
         upload5(e){                   //银行卡照
             var _this = this;
-            let reader = new FileReader();
             var AllowImgFileSize = 2100000; //上传图片最大值(单位字节)（ 2 M = 2097152 B ）超过2M上传失败
-            var file = e.target.files[0];
-            this.test4 = file
-            var imgUrlBase64;
-            if (file) {
-                //将文件以Data URL形式读入页面  
-                imgUrlBase64 = reader.readAsDataURL(file);
-                reader.onload = function (e) {
-                    _this.imgUrl5 = reader.result
-                    
-                    }
-                }
+            var file2 = e.target.files[0];
+            let imgName = file2.name;
+            let reader = new FileReader();
+            reader.readAsDataURL(file2)
+            reader.onload = function(e){
+                let result = e.target.result
+                var image = new Image();
+                image.src = result;
+                image.onload = function(){  
+                    var canvas = document.querySelector("#canvas");  
+                    var context = canvas.getContext("2d");  
+                    canvas.width = image.width; // 设置canvas的画布宽度为图片宽度  
+                    canvas.height = image.height;  
+                    context.drawImage(image, 0, 0, image.width, image.height) // 在canvas上绘制图片  
+                    let dataUrl = canvas.toDataURL('image/jpeg', 0.4) // 7为压缩比，可根据需要设置，设置过小会影响图片质量  
+                                            // dataUrl 为压缩后的图片资源，可将其上传到服务器  
+                    _this.imgUrl5 = dataUrl                        
+                    let file = _this.dataURLtoFile(dataUrl, imgName); 
+                    _this.test4= file; 
+                    }  
+            }
         },
-        upload6(e){                   //结算人身份证反面照
-            var _this = this;
-            let reader = new FileReader();
-            var AllowImgFileSize = 2100000; //上传图片最大值(单位字节)（ 2 M = 2097152 B ）超过2M上传失败
-            var file = e.target.files[0];
-            this.test5 = file
-            var imgUrlBase64;
-            if (file) {
-                //将文件以Data URL形式读入页面  
-                imgUrlBase64 = reader.readAsDataURL(file);
-                reader.onload = function (e) {
-                    _this.imgUrl6 = reader.result
-                    _this.random1 = _this.suiji();
-                    }
-                }
-        },
-        upload7(e){                   //结算人身份证正面照
-            var _this = this;
-            let reader = new FileReader();
-            var AllowImgFileSize = 2100000; //上传图片最大值(单位字节)（ 2 M = 2097152 B ）超过2M上传失败
-            var file = e.target.files[0];
-            this.test6 = file
-            var imgUrlBase64;
-            if (file) {
-                //将文件以Data URL形式读入页面  
-                imgUrlBase64 = reader.readAsDataURL(file);
-                reader.onload = function (e) {
-                    _this.imgUrl7 = reader.result
-                    _this.random2 = _this.suiji();
-                    }
-                }
+        // upload6(e){                   //结算人身份证反面照
+        //     var _this = this;
+        //     var AllowImgFileSize = 2100000; //上传图片最大值(单位字节)（ 2 M = 2097152 B ）超过2M上传失败
+        //     var file2 = e.target.files[0];
+        //     let imgName = file2.name;
+        //     let reader = new FileReader();
+        //     reader.readAsDataURL(file2)
+        //     reader.onload = function(e){
+        //         let result = e.target.result
+        //         var image = new Image();
+        //         image.src = result;
+        //         image.onload = function(){  
+        //             var canvas = document.querySelector("#canvas");  
+        //             var context = canvas.getContext("2d");  
+        //             canvas.width = image.width; // 设置canvas的画布宽度为图片宽度  
+        //             canvas.height = image.height;  
+        //             context.drawImage(image, 0, 0, image.width, image.height) // 在canvas上绘制图片  
+        //             let dataUrl = canvas.toDataURL('image/jpeg', 0.4) // 7为压缩比，可根据需要设置，设置过小会影响图片质量  
+        //                                     // dataUrl 为压缩后的图片资源，可将其上传到服务器  
+        //             _this.imgUrl6 = dataUrl                        
+        //             let file = _this.dataURLtoFile(dataUrl, imgName); 
+        //             _this.test5 = file; 
+        //             _this.random1 = _this.suiji();
+        //             }  
+        //     }
+        // },
+        // upload7(e){                   //结算人身份证正面照
+        //     var _this = this;
+        //     var AllowImgFileSize = 2100000; //上传图片最大值(单位字节)（ 2 M = 2097152 B ）超过2M上传失败
+        //     var file2 = e.target.files[0];
+        //     let imgName = file2.name;
+        //     let reader = new FileReader();
+        //     reader.readAsDataURL(file2)
+        //     reader.onload = function(e){
+        //         let result = e.target.result
+        //         var image = new Image();
+        //         image.src = result;
+        //         image.onload = function(){  
+        //             var canvas = document.querySelector("#canvas");  
+        //             var context = canvas.getContext("2d");  
+        //             canvas.width = image.width; // 设置canvas的画布宽度为图片宽度  
+        //             canvas.height = image.height;  
+        //             context.drawImage(image, 0, 0, image.width, image.height) // 在canvas上绘制图片  
+        //             let dataUrl = canvas.toDataURL('image/jpeg', 0.4) // 7为压缩比，可根据需要设置，设置过小会影响图片质量  
+        //                                     // dataUrl 为压缩后的图片资源，可将其上传到服务器  
+        //             _this.imgUrl7 = dataUrl                        
+        //             let file = _this.dataURLtoFile(dataUrl, imgName); 
+        //             _this.test6 = file; 
+        //             _this.random2 = _this.suiji();
+        //             }  
+        //     }
+        // },
+        dataURLtoFile(dataurl,filename) { 
+            var arr = dataurl.split(','),
+                mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]),
+                n = bstr.length,
+                u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new File([u8arr], filename, { type: mime });
         },
         areaResult:function(shenglist,result){
             this.shenglist = shenglist;
@@ -520,10 +572,9 @@ export default {
             }
         },
         change1(point){
-          var leg =  /^[0]\.[0-9]{2,4}$/
-          if(!leg.test(point)){
-              alert("请小数点后跟2~4位")
-              this.point = ''
+          if(point < 0.25 || point > 90){
+                alert("请输入0.25~90之间的数")
+                this.point = ''
           }
         },
         tap(){
@@ -536,11 +587,9 @@ export default {
             if(this.username1 == '' && this.banktype == '' && this.account == '' || this.imgUrl4 == '' || this.imgUrl5 == '' || this.imgUrl6 == '' || this.imgUrl7 == ''){
                 this.settle = "0"
             }
-                this.popupVisible3 = false
-            
-            
+                this.popupVisible3 = false;   
         },
-        xieyi1(){
+        xieyi1(){get_industry_type
             this.$router.push("/logo2")
         },
         onselte(item){
@@ -549,13 +598,13 @@ export default {
             this.showtime1 = false
         },
         submit(){
-                if(this.dianpu == '' || this.phoneNumber == '' || this.username == '' || this.cardid == '' || this.industry1 == '' || this.point == '' || this.postcode == '' || this.email == '' || this.bankNumber == '' || this.opennumber == '' || this.radiotask == '' || this.childlist == '' || this.iptNumber == '' || this.address1 == '' || this.province == '' || this.city == '' || this.town == '' || this.imgUrl == '' || this.imgUrl2 == '' || this.imgUrl3 == '' || this.username1 == '' || this.banktype == '' || this.account == '' || this.am1 == '' || this.pm1 == '' ||  this.ipt2 == '' || this.server1 == ''){
-                    alert("请完善个人信息")
-                    
+            // console.log(this.dianpu,this.phoneNumber,this.username,this.cardid,this.industry1,this.iptNumber,this.address1,this.province,this.city,this.town,this.imgUrl,this.imgUrl2,this.imgUrl3)
+                if(this.dianpu === '' || this.phoneNumber === '' || this.username === '' || this.cardid === '' || this.industry1 === ''  || this.iptNumber === '' || this.address1 === '' || this.province === '' || this.city === '' || this.town === '' || this.imgUrl === '' || this.imgUrl2 === '' || this.imgUrl3 === ''){
+                    alert("请完善个人信息")   
                 }else{
-
                         Toast.loading({
                             mask: true,
+                            duration:0,
                             message: '提交中...'
                         });
                 var _this = this;
@@ -571,10 +620,6 @@ export default {
                     jingdu = arr[0];
                     weidu = arr[1] 
                     // console.log(jingdu,weidu)
-
-
-
-
                 if(_this.settle == "2"){
                     let form = new FormData();
                     form.append("img[0]",_this.test)
@@ -589,19 +634,18 @@ export default {
                     form.append("sheng",_this.province)
                     form.append("shi",_this.city)
                     form.append("qu",_this.town)
-                    form.append("camp_over",_this.point)  
-                    form.append("open_tm",_this.am1 +"~"+ _this.pm1)
+                    // form.append("camp_over",_this.point)  
+                    // form.append("open_tm",_this.am1 +"~"+ _this.pm1)
                     form.append("site",_this.address1)
-                    form.append("is_task",_this.radiotask)
+                    // form.append("is_task",_this.radiotask)
                     form.append("order_no",_this.suiji())
                     form.append("first_class_merchant_no","C1800332967")
                     form.append("web_site","http://www.023wx.cn")
-                    form.append("merchant_type",_this.childlist)
-                    form.append("region_code",_this.postcode)
-                    form.append("email",_this.email)
-                    form.append("bank_code",_this.bankNumber)
-                    form.append("account_name",_this.username1)
-                    form.append("account_no",_this.account)
+                    // form.append("merchant_type",_this.childlist)
+                    // form.append("email",_this.email)
+                    // form.append("bank_code",_this.bankNumber)
+                    // form.append("account_name",_this.username1)
+                    // form.append("account_no",_this.account)
                     form.append("settle_bank_type","TOPRIVATE")
                     form.append("settlement_period","D1")
                     form.append("settlement_mode","AUTO")
@@ -616,38 +660,40 @@ export default {
                     form.append("tencent_order_no",_this.suiji())
                     form.append("shop_attr","2")
                     form.append("bank",_this.banktype)
-                    form.append("serve",_this.server1)
+                    // form.append("serve",_this.server1)
                     form.append("lt_num",jingdu)
                     form.append("wt_num",weidu )
                     form.append("pay_way",_this.pay_way1)
                           $.ajax({
-                                url:"http://ht.yhbapp.com/api/shop/setShopSettled",
+                                url:"http://app.dyxzf.com/api/shop/setShopSettled",
                                 type:"POST",
                                 cache:false,
                                 data:form,
                                 processData:false,
                                 contentType:false,
                                 success:function(data){
-                                    Toast.clear();
+                                        Toast.clear();
                                         Dialog.alert({
                                                 title: '资料已提交!',
                                                 confirmButtonText:"返回"
                                             }).then(() => {
                                                 _this.$router.push("/index")
-                                            }); 
-                                                       
+                                            });                    
+                                },
+                                fail:function(err){
+                                    Toast.clear();
+                                    alert("提交失败"+err)
                                 }
                             })                            
-                        
                 }else if(_this.settle == "3"){
                     let form = new FormData();
                     form.append("img[0]",_this.test)
                     form.append("img[1]",_this.test1)
                     form.append("img[2]",_this.test2)
-                    form.append("img[3]",_this.test3)
-                    form.append("img[4]",_this.test4)
-                    form.append("img[5]",_this.test5)
-                    form.append("img[6]",_this.test6)
+                    // form.append("img[3]",_this.test3)
+                    // form.append("img[4]",_this.test4)
+                    // form.append("img[5]",_this.test5)
+                    // form.append("img[6]",_this.test6)
                     form.append("user_id",_this.$store.state.userid)
                     form.append("name",_this.dianpu)
                     form.append("law_name",_this.username)
@@ -658,18 +704,17 @@ export default {
                     form.append("shi",_this.city)
                     form.append("qu",_this.town)
                     form.append("camp_over",_this.point)  
-                    form.append("open_tm",_this.am1 +"~"+ _this.pm1)
+                    // form.append("open_tm",_this.am1 +"~"+ _this.pm1)
                     form.append("site",_this.address1)
-                    form.append("is_task",_this.radiotask)
+                    // form.append("is_task",_this.radiotask)
                     form.append("order_no",_this.suiji())
                     form.append("first_class_merchant_no","C1800332967")
                     form.append("web_site","http://www.023wx.cn")
-                    form.append("merchant_type",_this.childlist)
-                    form.append("region_code",_this.postcode)
-                    form.append("email",_this.email)
-                    form.append("bank_code",_this.bankNumber)
-                    form.append("account_name",_this.username1)
-                    form.append("account_no",_this.account)
+                    // form.append("merchant_type",_this.childlist)
+                    // form.append("email",_this.email)
+                    // form.append("bank_code",_this.bankNumber)
+                    // form.append("account_name",_this.username1)
+                    // form.append("account_no",_this.account)
                     form.append("settle_bank_type","TOPRIVATE")
                     form.append("settlement_period","D1")
                     form.append("settlement_mode","AUTO")
@@ -683,13 +728,14 @@ export default {
                     form.append("app_order_no",_this.suiji())
                     form.append("tencent_order_no",_this.suiji())
                     form.append("shop_attr","2")
-                    form.append("bank",_this.banktype)
-                    form.append("serve",_this.server1)
+                    // form.append("bank",_this.banktype)
+                    // form.append("serve",_this.server1)
                     form.append("lt_num",jingdu)
                     form.append("wt_num",weidu )
                     form.append("pay_way",_this.pay_way1)
+                    form.append("shop_settle_type","1")
                           $.ajax({
-                                url:"http://ht.yhbapp.com/api/shop/setShopSettled",
+                                url:"http://app.dyxzf.com/api/shop/setShopSettled",
                                 type:"POST",
                                 cache:false,
                                 data:form,
@@ -703,10 +749,83 @@ export default {
                                             }).then(() => {
                                                 _this.$router.push("/index")
                                             });                  
+                                },
+                                fail:function(err){
+                                    Toast.clear();
+                                    alert("提交失败"+err)
                                 }
                             })                            
                 }else{
-                    alert("请完善信息")
+                   let form = new FormData();
+                    form.append("img[0]",_this.test)
+                    form.append("img[1]",_this.test1)
+                    form.append("img[2]",_this.test2)
+                    form.append("user_id",_this.$store.state.userid)
+                    form.append("name",_this.dianpu)
+                    form.append("law_name",_this.username)
+                    form.append("cd_num",_this.cardid)
+                    form.append("phone",_this.phoneNumber) 
+                    form.append("type_id",_this.industry1)
+                    form.append("sheng",_this.province)
+                    form.append("shi",_this.city)
+                    form.append("qu",_this.town)
+                    // form.append("camp_over",_this.point)  
+                    // form.append("open_tm",_this.am1 +"~"+ _this.pm1)
+                    form.append("site",_this.address1)
+                    // form.append("is_task",_this.radiotask)
+                    form.append("order_no",_this.suiji())
+                    form.append("first_class_merchant_no","C1800332967")
+                    form.append("web_site","http://www.023wx.cn")
+                    // form.append("merchant_type",_this.childlist)
+                    // form.append("email",_this.email)
+                    // form.append("bank_code",_this.bankNumber)
+                    // form.append("account_name",_this.username1)
+                    // form.append("account_no",_this.account)
+                    form.append("settle_bank_type","TOPRIVATE")
+                    form.append("settlement_period","D1")
+                    form.append("settlement_mode","AUTO")
+                    form.append("settlement_remark",_this.accountremark)
+                    form.append("merchant_category",_this.iptNumber1)
+                    form.append("industry_type_code",_this.iptNumber)
+                    form.append("business_license",_this.opennumber)
+                    form.append("aptitude_order_no1",_this.random)
+                    form.append("aptitude_order_no2",_this.random2)
+                    form.append("aptitude_order_no3",_this.random1)
+                    form.append("app_order_no",_this.suiji())
+                    form.append("tencent_order_no",_this.suiji())
+                    form.append("shop_attr","2")
+                    form.append("bank",_this.banktype)
+                    // form.append("serve",_this.server1)
+                    form.append("lt_num",jingdu)
+                    form.append("wt_num",weidu )
+                    form.append("pay_way",_this.pay_way1)
+                          $.ajax({
+                                url:"http://app.dyxzf.com/api/shop/setShopSettled",
+                                type:"POST",
+                                cache:false,
+                                data:form,
+                                processData:false,
+                                contentType:false,
+                                success:function(data){
+
+                                    if(data.status.code == "200"){
+                                        Toast.clear();
+                                        Dialog.alert({
+                                                title: '资料已提交!',
+                                                confirmButtonText:"返回"
+                                            }).then(() => {
+                                                _this.$router.push("/index")
+                                            }); 
+                                    }else{
+                                        Toast.clear();
+                                        alert(data.status.message)
+                                    }                   
+                                },
+                                fail:function(err){
+                                    Toast.clear();
+                                    alert("提交失败"+err)
+                                }
+                            })                            
                 }
         }
     )}
@@ -715,7 +834,7 @@ export default {
     mounted(){
         var _this = this;
             (function(){
-                 axios.get("http://ht.yhbapp.com/api.php/Shop/get_industry_type").then(function(data){                //行业分类
+                 axios.get("http://app.dyxzf.com/api.php/Shop/get_industry_type").then(function(data){                //行业分类
                      _this.columns = data.data;
                 })
             })();
@@ -757,12 +876,6 @@ export default {
                 this.phoneNumber = ""
             }
         },
-        postcode(a){
-           let leg = /\D/g;
-            if(leg.test(a)){
-                this.postcode = ""   
-            } 
-        },
         bankNumber:function(a){
             let leg = /\D/g;
             if(leg.test(a)){
@@ -781,6 +894,9 @@ export default {
                 $("html").css("position","static")
             }
         }
+    },
+    beforeDestroy(){
+        Toast.clear();
     }
 }
 </script>

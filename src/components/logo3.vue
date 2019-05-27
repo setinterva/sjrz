@@ -29,7 +29,7 @@ export default {
         (function(){
             $.ajax({
                 type:"get",
-                url:"http://ht.yhbapp.com/api.php/Active_Rule/index.html?type_id=7",
+                url:"http://yhb.28699065.com/api.php/Active_Rule/index.html?type_id=7",
                 dataType:"json",
                 success:function(data){
                     _this.html = data.data.content

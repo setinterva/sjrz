@@ -4,9 +4,9 @@
             商家入驻申请表
         </div>
             <h3>账户类别</h3>
-          <router-link to="/enterprise"><h4>企业商户</h4></router-link>  
-            <router-link to="/individual"><h4>个体户</h4></router-link>
-            <router-link to="/personage"><h4>个人收款</h4></router-link>
+          <!-- <router-link to="/enterprise"><h4>企业商户</h4></router-link>   -->
+          <router-link to="/individual"><h4>个体户</h4></router-link>
+          <!-- <router-link to="/personage"><h4>个人收款</h4></router-link> -->
     </div>
 </template>
 <script>
@@ -18,9 +18,11 @@ export default {
         }
     },
     mounted(){
-        console.log(this.flage)
+    //   console.log(this.$route.query.id);
+    //     console.log(this.flage)
          this.$store.commit('change', this.$route.query.id)
              var u = navigator.userAgent;
+
                 if (u.indexOf('iPhone') > -1) {//苹果手机
                     this.flage = false
                 }else{
